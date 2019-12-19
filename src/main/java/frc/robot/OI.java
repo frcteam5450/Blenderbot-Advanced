@@ -49,8 +49,10 @@ public class OI {
   Button B = new JoystickButton(controller, 2);
   Button X = new JoystickButton(controller, 3);
   Button Y = new JoystickButton(controller, 4);
+  Button RB = new JoystickButton(controller, 6);
 
   public OI() {
     Y.whenPressed(new ToggleSpeed());
+    RB.whenPressed(new ToggleBed());
   }
 }

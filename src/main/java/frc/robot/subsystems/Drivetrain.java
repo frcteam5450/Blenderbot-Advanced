@@ -27,7 +27,7 @@ public class Drivetrain extends Subsystem {
   // here. Call these from Commands.
 
   //Motor Controller Declarations
-  WPI_TalonSRX 
+  WPI_TalonSRX
   leftMotor1,
   leftMotor2,
   rightMotor1,

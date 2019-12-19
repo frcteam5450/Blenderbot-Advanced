@@ -42,6 +42,12 @@ public class RobotMap {
   servo1 = 0,
   servo2 = 1;
 
+  //Servo set positions
+  public static double
+  upPos = 0.5,
+  downPos1 = 1,
+  downPos2 = 0;
+
   //Controller(s)
   public static int
   controller1 = 0;
