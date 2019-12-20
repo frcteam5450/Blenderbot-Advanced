@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,13 +16,28 @@ import frc.robot.Robot;
 
 public class UpdateIntake extends Command {
 
-  XboxController controller;
+  XboxController 
+  controller1,
+  controller2;
+
+  boolean 
+  POVRightDepressed1,
+  POVRightDepressed2,
+
+  POVLeftDepressed1,
+  POVLeftDepressed2;
 
   public UpdateIntake() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.intake);
-    controller = new XboxController(RobotMap.controller1);
+    controller1 = new XboxController(RobotMap.controller1);
+    controller2 = new XboxController(RobotMap.controller2);
+    POVRightDepressed1 = false;
+    POVRightDepressed2 = false;
+
+    POVLeftDepressed1 = false;
+    POVLeftDepressed2 = false;
   }
 
   // Called just before this Command runs the first time
@@ -33,12 +49,59 @@ public class UpdateIntake extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double backPower = controller.getTriggerAxis(Hand.kLeft);
-    double forwardPower = controller.getTriggerAxis(Hand.kRight);
+    if (DriverStation.getInstance().isOperatorControl()) {
+      double backPowerActual = controller1.getTriggerAxis(Hand.kLeft);
+      double forwardPowerActual = controller1.getTriggerAxis(Hand.kRight);
 
-    double speed = (backPower - forwardPower) * RobotMap.kIntake;
+      double speed = (backPowerActual - forwardPowerActual) * RobotMap.kIntake;
 
-    Robot.intake.runIntake(speed);
+      Robot.intake.runIntake(speed);
+
+      //POV Button debounce, right on controller 1
+      if (controller1.getPOV() == 90) {
+        POVRightDepressed1 = true;
+      }
+      else {
+        if(POVRightDepressed1 && RobotMap.kIntake < 1) {
+          RobotMap.kIntake =+ 0.1;
+        }
+        POVRightDepressed1 = false;
+      }
+
+      //POV Button debounce, left on controller 1
+      if (controller1.getPOV() == 270) {
+        POVLeftDepressed1 = true;
+      }
+      else {
+        if(POVLeftDepressed1 && RobotMap.kIntake > 0) {
+          RobotMap.kIntake =- 0.1;
+        }
+        POVLeftDepressed1 = false;
+      }
+
+      //POV Button debounce, right on controller 2
+      if (controller2.getPOV() == 90) {
+        POVRightDepressed2 = true;
+      }
+      else {
+        if(POVRightDepressed2 && RobotMap.kIntake < 1) {
+          RobotMap.kIntake =+ 0.1;
+        }
+        POVRightDepressed2 = false;
+      }
+
+      //POV Button debounce, left on controller 2
+      if (controller2.getPOV() == 270) {
+        POVLeftDepressed2 = true;
+      }
+      else {
+        if(POVLeftDepressed2 && RobotMap.kIntake > 0) {
+          RobotMap.kIntake =- 0.1;
+        }
+        POVLeftDepressed2 = false;
+      }
+
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

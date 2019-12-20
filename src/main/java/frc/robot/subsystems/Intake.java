@@ -15,6 +15,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.UpdateIntake;
 
@@ -37,6 +39,19 @@ public class Intake extends Subsystem {
 
   public void stopIntake() {
     intakeMotor.set(0);
+  }
+
+  public void reportStats() {
+    double current = intakeMotor.getOutputCurrent();
+    SmartDashboard.putNumber("Intake Motor (4)", current);
+
+    if (current > RobotMap.motorWarningCurrent) {
+      print("Motor is currently pulling > " + RobotMap.motorWarningCurrent + " Amps!");
+    }
+  }
+
+  private void print(String str) {
+    System.out.println("Intake: " + str);
   }
 
   @Override

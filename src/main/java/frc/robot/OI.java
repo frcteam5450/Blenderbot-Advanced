@@ -44,15 +44,25 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
-  XboxController controller = new XboxController(RobotMap.controller1);
-  Button A = new JoystickButton(controller, 1);
-  Button B = new JoystickButton(controller, 2);
-  Button X = new JoystickButton(controller, 3);
-  Button Y = new JoystickButton(controller, 4);
-  Button RB = new JoystickButton(controller, 6);
+  XboxController controller1 = new XboxController(RobotMap.controller1);
+  Button A1 = new JoystickButton(controller1, 1);
+  Button B1 = new JoystickButton(controller1, 2);
+  Button X1 = new JoystickButton(controller1, 3);
+  Button Y1 = new JoystickButton(controller1, 4);
+  Button RB1 = new JoystickButton(controller1, 6);
+
+  XboxController controller2 = new XboxController(RobotMap.controller2);
+  Button A2 = new JoystickButton(controller2, 1);
+  Button B2 = new JoystickButton(controller2, 2);
+  Button X2 = new JoystickButton(controller2, 3);
+  Button Y2 = new JoystickButton(controller2, 4);
+  Button RB2 = new JoystickButton(controller2, 6);
 
   public OI() {
-    Y.whenPressed(new ToggleSpeed());
-    RB.whenPressed(new ToggleBed());
+    Y1.whenPressed(new ToggleSpeed());
+    RB1.whenPressed(new ToggleBed());
+
+    Y2.whenPressed(new ToggleSpeed());
+    RB2.whenPressed(new ToggleBed());
   }
 }

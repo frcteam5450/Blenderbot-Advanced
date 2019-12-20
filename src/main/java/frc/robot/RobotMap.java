@@ -50,7 +50,8 @@ public class RobotMap {
 
   //Controller(s)
   public static int
-  controller1 = 0;
+  controller1 = 0,
+  controller2 = 1;
 
   //Motor Powers
   public static double
@@ -58,9 +59,13 @@ public class RobotMap {
   kFast = 0.7, //Faster motor setting
   kSlow = 0.5, //Slower motor setting
   kCreep = 0.25, //Creep forward motor setting
-  kIntake = 0.85; //Intake motor setting
+  kIntake = 1.00; //Intake motor setting
 
   //Controller deadzone
   public static double
   deadZone = 0.05;
+
+  //Safety Tolerances
+  public static double
+  motorWarningCurrent = 35;
 }

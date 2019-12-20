@@ -5,6 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
+/**
+ * Version 0.1.0
+ * Working code, tested with Blenderbot
+ * -working drivetrain
+ * -working intake
+ */
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
