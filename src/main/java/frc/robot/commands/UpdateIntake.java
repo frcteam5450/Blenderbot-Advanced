@@ -28,8 +28,6 @@ public class UpdateIntake extends Command {
   POVLeftDepressed2;
 
   public UpdateIntake() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.intake);
     controller1 = new XboxController(RobotMap.controller1);
     controller2 = new XboxController(RobotMap.controller2);
@@ -50,8 +48,19 @@ public class UpdateIntake extends Command {
   @Override
   protected void execute() {
     if (DriverStation.getInstance().isOperatorControl()) {
-      double backPowerActual = controller1.getTriggerAxis(Hand.kLeft);
-      double forwardPowerActual = controller1.getTriggerAxis(Hand.kRight);
+      double 
+      backPower1 = controller1.getTriggerAxis(Hand.kLeft),
+      backPower2 = controller2.getTriggerAxis(Hand.kLeft),
+      forwardPower1 = controller1.getTriggerAxis(Hand.kRight),
+      forwardPower2 = controller2.getTriggerAxis(Hand.kRight),
+      backPowerActual,
+      forwardPowerActual;
+
+      if (backPower1 > backPower2) backPowerActual = backPower1;
+      else backPowerActual = backPower2;
+
+      if (forwardPower1 > forwardPower2) forwardPowerActual = forwardPower1;
+      else forwardPowerActual = forwardPower2;
 
       double speed = (backPowerActual - forwardPowerActual) * RobotMap.kIntake;
 
@@ -102,6 +111,8 @@ public class UpdateIntake extends Command {
       }
 
     }
+
+    Robot.intake.reportStats();
   }
 
   // Make this return true when this Command no longer needs to run execute()

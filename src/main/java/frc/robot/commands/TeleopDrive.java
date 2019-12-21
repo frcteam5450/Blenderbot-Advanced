@@ -19,12 +19,15 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  */
 public class TeleopDrive extends Command {
 
-  XboxController controller1;
+  XboxController 
+  controller1,
+  controller2;
 
   public TeleopDrive() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.drivetrain);
     controller1 = new XboxController(RobotMap.controller1);
+    controller2 = new XboxController(RobotMap.controller2);
   }
 
   // Called just before this Command runs the first time
@@ -37,18 +40,35 @@ public class TeleopDrive extends Command {
   @Override
   protected void execute() {
     if (DriverStation.getInstance().isOperatorControl()) {
-      double leftPower = controller1.getY(Hand.kLeft) * RobotMap.kCurrent;
-      double rightPower = controller1.getY(Hand.kRight) * RobotMap.kCurrent;
+      double
+      leftPower,
+      leftPower1 = controller1.getY(Hand.kLeft),
+      leftPower2 = controller2.getY(Hand.kLeft),
+      
+      rightPower,
+      rightPower1 = controller1.getY(Hand.kRight),
+      rightPower2 = controller2.getY(Hand.kRight);
+
+      if (Math.abs(leftPower1) > Math.abs(leftPower2)) leftPower = leftPower1;
+      else leftPower = leftPower2;
+
+      if (Math.abs(rightPower1) > Math.abs(rightPower2)) rightPower = rightPower1;
+      else rightPower = rightPower2;
 
       if (Math.abs(leftPower) < RobotMap.deadZone) leftPower = 0;
-      if (Math.abs(rightPower) < RobotMap.deadZone) rightPower = 0;
+      else leftPower = leftPower * RobotMap.kCurrent;
 
-      if (leftPower == 0 && rightPower == 0 && controller1.getPOV() == 0) {
+      if (Math.abs(rightPower) < RobotMap.deadZone) rightPower = 0;
+      else rightPower = rightPower * RobotMap.kCurrent;
+
+      if (leftPower == 0 && rightPower == 0 && (controller1.getPOV() == 0 || controller2.getPOV() == 0)) {
         leftPower = RobotMap.kCreep;
         rightPower = RobotMap.kCreep;
       }
 
       Robot.drivetrain.drive(leftPower, rightPower);
+
+      Robot.drivetrain.reportStats();
     }
   }
 

@@ -11,6 +11,11 @@
  * Working code, tested with Blenderbot
  * -working drivetrain
  * -working intake
+ * 
+ * Version 0.1.1
+ * **UNTESTED**
+ * -Added Dual Driver Control
+ * -Added some debug data (SmartDashboard)
  */
 package frc.robot;
 

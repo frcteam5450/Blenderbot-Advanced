@@ -13,6 +13,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.TeleopDrive;
 
@@ -78,6 +79,29 @@ public class Drivetrain extends Subsystem {
   //Method for getting rate of rotation of gyro
   public double getRate() {
     return gyro.getRate();
+  }
+
+  public void reportStats() {
+    SmartDashboard.putNumber("Left Motor 1 (0)", leftMotor1.getOutputCurrent());
+    SmartDashboard.putNumber("Left Motor 2 (1)", leftMotor2.getOutputCurrent());
+    SmartDashboard.putNumber("Right Motor 1 (2)", rightMotor1.getOutputCurrent());
+    SmartDashboard.putNumber("Right Motor 2 (3)", rightMotor2.getOutputCurrent());
+
+    if (leftMotor1.getOutputCurrent() > RobotMap.motorWarningCurrent) 
+    print("Motor " + leftMotor1.getBaseID() + " is > " + RobotMap.motorWarningCurrent + " Amps!");
+
+    if (leftMotor2.getOutputCurrent() > RobotMap.motorWarningCurrent) 
+    print("Motor " + leftMotor2.getBaseID() + " is > " + RobotMap.motorWarningCurrent + " Amps!");
+    
+    if (rightMotor1.getOutputCurrent() > RobotMap.motorWarningCurrent) 
+    print("Motor " + rightMotor1.getBaseID() + " is > " + RobotMap.motorWarningCurrent + " Amps!");
+
+    if (rightMotor2.getOutputCurrent() > RobotMap.motorWarningCurrent) 
+    print("Motor " + rightMotor2.getBaseID() + " is > " + RobotMap.motorWarningCurrent + " Amps!");
+  }
+
+  private void print(String str) {
+    System.out.println("Drivetrain: " + str);
   }
 
   @Override
