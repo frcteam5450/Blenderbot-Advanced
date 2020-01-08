@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Servo;
 
@@ -39,6 +40,11 @@ public class Bed extends Subsystem {
 
   public double getPos() {
     return servo1.get();
+  }
+
+  public void reportStats() {
+    SmartDashboard.putNumber("Servo 1 Position", servo1.get());
+    SmartDashboard.putNumber("Servo 2 Position", servo2.get());
   }
 
   @Override

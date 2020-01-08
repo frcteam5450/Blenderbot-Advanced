@@ -44,7 +44,7 @@ public class TeleopDrive extends Command {
       leftPower,
       leftPower1 = controller1.getY(Hand.kLeft),
       leftPower2 = controller2.getY(Hand.kLeft),
-      
+
       rightPower,
       rightPower1 = controller1.getY(Hand.kRight),
       rightPower2 = controller2.getY(Hand.kRight);
@@ -62,8 +62,8 @@ public class TeleopDrive extends Command {
       else rightPower = rightPower * RobotMap.kCurrent;
 
       if (leftPower == 0 && rightPower == 0 && (controller1.getPOV() == 0 || controller2.getPOV() == 0)) {
-        leftPower = RobotMap.kCreep;
-        rightPower = RobotMap.kCreep;
+        leftPower = -RobotMap.kCreep;
+        rightPower = -RobotMap.kCreep;
       }
 
       Robot.drivetrain.drive(leftPower, rightPower);

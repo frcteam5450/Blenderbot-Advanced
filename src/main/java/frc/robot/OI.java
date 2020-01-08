@@ -44,7 +44,7 @@ public class OI {
   // Start the command when the button is released and let it run the command
   // until it is finished as determined by it's isFinished method.
   // button.whenReleased(new ExampleCommand());
-  XboxController controller1 = new XboxController(RobotMap.controller1);
+  public static XboxController controller1 = new XboxController(RobotMap.controller1);
   Button A1 = new JoystickButton(controller1, 1);
   Button B1 = new JoystickButton(controller1, 2);
   Button X1 = new JoystickButton(controller1, 3);
@@ -59,10 +59,14 @@ public class OI {
   Button RB2 = new JoystickButton(controller2, 6);
 
   public OI() {
-    Y1.whenPressed(new ToggleSpeed());
+    Y1.whenPressed(new ToggleSpeed(RobotMap.kFast));
+    B1.whenPressed(new ToggleSpeed(RobotMap.kMed));
+    A1.whenPressed(new ToggleSpeed(RobotMap.kSlow));
     RB1.whenPressed(new ToggleBed());
 
-    Y2.whenPressed(new ToggleSpeed());
+    Y2.whenPressed(new ToggleSpeed(RobotMap.kFast));
+    B2.whenPressed(new ToggleSpeed(RobotMap.kMed));
+    A2.whenPressed(new ToggleSpeed(RobotMap.kSlow));
     RB2.whenPressed(new ToggleBed());
   }
 }

@@ -71,10 +71,11 @@ public class UpdateIntake extends Command {
         POVRightDepressed1 = true;
       }
       else {
-        if(POVRightDepressed1 && RobotMap.kIntake < 1) {
-          RobotMap.kIntake =+ 0.1;
+        if (POVRightDepressed1 && RobotMap.kIntake < 1) {
+          RobotMap.kIntake = RobotMap.kIntake + 0.1;
+          POVRightDepressed1 = false;
         }
-        POVRightDepressed1 = false;
+        
       }
 
       //POV Button debounce, left on controller 1
@@ -83,9 +84,10 @@ public class UpdateIntake extends Command {
       }
       else {
         if(POVLeftDepressed1 && RobotMap.kIntake > 0) {
-          RobotMap.kIntake =- 0.1;
+          RobotMap.kIntake = RobotMap.kIntake - 0.1;
+          POVLeftDepressed1 = false;
         }
-        POVLeftDepressed1 = false;
+        
       }
 
       //POV Button debounce, right on controller 2
@@ -94,9 +96,10 @@ public class UpdateIntake extends Command {
       }
       else {
         if(POVRightDepressed2 && RobotMap.kIntake < 1) {
-          RobotMap.kIntake =+ 0.1;
+          RobotMap.kIntake = RobotMap.kIntake + 0.1;
+          POVRightDepressed2 = false;
         }
-        POVRightDepressed2 = false;
+        
       }
 
       //POV Button debounce, left on controller 2
@@ -105,14 +108,13 @@ public class UpdateIntake extends Command {
       }
       else {
         if(POVLeftDepressed2 && RobotMap.kIntake > 0) {
-          RobotMap.kIntake =- 0.1;
+          RobotMap.kIntake = RobotMap.kIntake - 0.1;
+          POVLeftDepressed2 = false;
         }
-        POVLeftDepressed2 = false;
+        
       }
 
     }
-
-    Robot.intake.reportStats();
   }
 
   // Make this return true when this Command no longer needs to run execute()

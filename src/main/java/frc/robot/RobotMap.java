@@ -56,10 +56,11 @@ public class RobotMap {
   //Motor Powers
   public static double
   kCurrent = 0.7, //Current Motor set speed, starts at 0.7
-  kFast = 0.7, //Faster motor setting
-  kSlow = 0.5, //Slower motor setting
-  kCreep = 0.25, //Creep forward motor setting
-  kIntake = 1.00; //Intake motor setting
+  kFast = 1, //Faster motor setting
+  kMed = 0.6,
+  kSlow = 0.34, //Slower motor setting
+  kCreep = 0.15, //Creep forward motor setting
+  kIntake = 1; //Intake motor setting
 
   //Controller deadzone
   public static double

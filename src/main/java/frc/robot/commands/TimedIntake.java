@@ -7,45 +7,55 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotMap;
+import frc.robot.Robot;
 
-public class ToggleSpeed extends Command {
+public class TimedIntake extends Command {
 
-  double _speed;
+  Timer timer;
 
-  public ToggleSpeed(double speed) {
+  double _time;
+  double _power;
+
+  public TimedIntake(double time, double power) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    _speed = speed;
+    requires(Robot.intake);
+    _time = time;
+    _power = power;
+    timer = new Timer();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    timer.start();
+    timer.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.kCurrent = _speed;
+    Robot.intake.runIntake(_power);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //Only want the command to run once
-    return true;
+    return timer.get() > _time;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.intake.stopIntake();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

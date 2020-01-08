@@ -16,15 +16,21 @@
  * **UNTESTED**
  * -Added Dual Driver Control
  * -Added some debug data (SmartDashboard)
+ * 
+ * Version 0.1.2 Competition Code
+ * -Added Autonomous
+ * -Added More speed control
  */
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.WPILibVersion;
+import frc.robot.autonomous.BunnybotsAuto1;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -41,6 +47,10 @@ public class Robot extends TimedRobot {
   public static Bed bed = new Bed();
   public static OI m_oi;
 
+  CameraServer cam;
+
+  Command statReport = new ReportStats();
+
   Command autonomousCommand;
   SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -51,8 +61,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_oi = new OI();
+    cam.getInstance().startAutomaticCapture().setResolution(854, 480 );
     autoChooser.setDefaultOption("Default Auto", new DefaultAuto());
-    //autoChooser.addOption("My Auto", new MyAutoCommand());
+    autoChooser.addOption("Drive Forward and Outtake", new BunnybotsAuto1());
     SmartDashboard.putData("Auto mode", autoChooser);
   }
 
@@ -107,9 +118,11 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
+    bed.setUp();
     if (autonomousCommand != null) {
       autonomousCommand.start();
     }
+    
   }
 
   /**
@@ -129,6 +142,8 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    bed.setUp();
+    //statReport.start();
   }
 
   /**

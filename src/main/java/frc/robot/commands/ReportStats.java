@@ -8,16 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
+import frc.robot.OI;
 import frc.robot.RobotMap;
 
-public class ToggleSpeed extends Command {
-
-  double _speed;
-
-  public ToggleSpeed(double speed) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    _speed = speed;
+public class ReportStats extends Command {
+  public ReportStats() {
+    //requires(Robot.intake);
+    //requires(Robot.drivetrain);
+    //requires(Robot.bed);
   }
 
   // Called just before this Command runs the first time
@@ -28,14 +28,19 @@ public class ToggleSpeed extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotMap.kCurrent = _speed;
+    Robot.bed.reportStats();
+    Robot.drivetrain.reportStats();
+    Robot.intake.reportStats();
+
+    SmartDashboard.putNumber("Drivetrain Speed", RobotMap.kCurrent);
+    SmartDashboard.putNumber("Intake Speed", RobotMap.kIntake);
+    SmartDashboard.putNumber("POV", OI.controller1.getPOV());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //Only want the command to run once
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
